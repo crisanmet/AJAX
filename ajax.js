@@ -86,3 +86,27 @@
 
   getData();
 })();
+
+(() => {
+  const $axios = document.getElementById("axios");
+  const $fragment = document.createDocumentFragment();
+
+  axios
+    .get("https://jsonplaceholder.typicode.com/users")
+    .then((res) => {
+      let json = res.data;
+
+      json.forEach((el) => {
+        const $li = document.createElement("li");
+        $li.innerHTML = `Nombre: ${el.name}--Mail: ${el.email}`;
+        $fragment.appendChild($li);
+      });
+
+      $axios.appendChild($fragment);
+    })
+    .catch((err) => {
+      let message = err.response.statusText || "Ocurrio un error";
+      $axios.innerHTML = `Error ${err.response.status}:${message}`;
+    })
+    .finally(() => console.log("Se ejecuta indep. del resultado"));
+})();
