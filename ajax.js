@@ -59,6 +59,7 @@
     );
 })();
 
+/*API FETCH ASYNC*/
 (() => {
   const $fetchAsync = document.getElementById("fetch-async");
   const $fragment = document.createDocumentFragment();
@@ -87,6 +88,7 @@
   getData();
 })();
 
+/*AXIOS*/
 (() => {
   const $axios = document.getElementById("axios");
   const $fragment = document.createDocumentFragment();
@@ -111,6 +113,7 @@
     .finally(() => console.log("Se ejecuta indep. del resultado"));
 })();
 
+/*AXIOS ASYNC*/
 (() => {
   const $axiosAsync = document.getElementById("axios-async");
   const $fragment = document.createDocumentFragment();
