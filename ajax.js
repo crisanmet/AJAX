@@ -110,3 +110,27 @@
     })
     .finally(() => console.log("Se ejecuta indep. del resultado"));
 })();
+
+(() => {
+  const $axiosAsync = document.getElementById("axios-async");
+  const $fragment = document.createDocumentFragment();
+
+  async function getData() {
+    try {
+      let res = await axios.get("https://jsonplaceholder.typicode.com/users");
+      let json = await res.data;
+
+      json.forEach((el) => {
+        const $li = document.createElement("li");
+        $li.innerHTML = `Nombre: ${el.name}--Mail: ${el.email}`;
+        $fragment.appendChild($li);
+      });
+
+      $axiosAsync.appendChild($fragment);
+    } catch (err) {
+      let message = err.response.statusText || "Ocurrio un error";
+      $axiosAsync.innerHTML = `Error ${err.response.status}:${message}`;
+    }
+  }
+  getData();
+})();
