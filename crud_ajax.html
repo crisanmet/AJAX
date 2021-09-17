@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD API REST AJAX</title>
+  </head>
+  <body>
+    <h1>CRUD API REST AJAX</h1>
+    <section class="crud">
+      <article>
+        <h2 class="crud-title">Agregar Santo</h2>
+        <form class="crud-form">
+          <input type="text" name="nombre" placeholder="nombre" required />
+          <br />
+          <input
+            type="text"
+            name="constelacion"
+            placeholder="constelación"
+            required
+          />
+          <br />
+          <input type="submit" value="enviar" />
+          <input type="hidden" name="id" />
+        </form>
+      </article>
+      <article>
+        <h2>Ver Santos</h2>
+        <table class="crud-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Constelación</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
+    </section>
+    <template id="crud-template">
+      <tr>
+        <td class="name"></td>
+        <td class="constellation"></td>
+        <td>
+          <button class="edit">Editar</button>
+          <button class="delete">Eliminar</button>
+        </td>
+      </tr>
+    </template>
+    <script>
+      const d = document;
+      const $table = d.querySelector(".crud-table");
+      const $form = d.querySelector(".crud-form");
+      const $title = d.querySelector(".crud-title");
+      const $template = d.getElementById("crud-template").content;
+      const $fragment = d.createDocumentFragment();
+
+      const ajax = (options) => {
+        let { url, method, success, error, data } = options;
+        const xhr = new XMLHttpRequest();
+
+        xhr.addEventListener("readystatechange", (e) => {
+          if (xhr.readyState !== 4) return;
+
+          if (xhr.status >= 200 && xhr.status < 300) {
+            let json = JSON.parse(xhr.responseText);
+            success(json);
+          } else {
+            let message = xhr.statusText || "Ocurrio un error";
+            error(`Error ${xhr.status}:${message}`);
+          }
+        });
+
+        xhr.open(method || "GET", url);
+        xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+        xhr.send(JSON.stringify(data));
+      };
+
+      const getAll = () => {
+        ajax({
+          method: "GET",
+          url: "http://localhost:3000/santos",
+          success: (res) => {
+            res.forEach((el) => {
+              $template.querySelector(".name").textContent = el.nombre;
+              $template.querySelector(".constellation").textContent =
+                el.constelacion;
+              $template.querySelector(".edit").dataset.id = el.id;
+              $template.querySelector(".edit").dataset.name = el.nombre;
+              $template.querySelector(".edit").dataset.constellation =
+                el.constelacion;
+              $template.querySelector(".delete").dataset.id = el.id;
+
+              let $clone = d.importNode($template, true);
+              $fragment.appendChild($clone);
+            });
+
+            $table.querySelector("tbody").appendChild($fragment);
+          },
+          error: (err) => {
+            $table.insertAdjacentHTML("afterend", `<p><b>${err}</b></p>`);
+          },
+          data: null,
+        });
+      };
+      d.addEventListener("DOMContentLoaded", getAll);
+    </script>
+  </body>
+</html>
