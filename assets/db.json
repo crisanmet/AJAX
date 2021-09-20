@@ -1,9 +1,9 @@
 {
   "santos": [
     {
-      "id": 1,
-      "nombre": "Seiya",
-      "constelacion": "Pegaso"
+      "nombre": "Cris",
+      "constelacion": "Pegaso",
+      "id": 1
     },
     {
       "id": 2,
@@ -24,11 +24,6 @@
       "id": 5,
       "nombre": "ikki",
       "constelacion": "Fénix"
-    },
-    {
-      "id": 6,
-      "nombre": "Saga",
-      "constelacion": "Geminis"
     }
   ],
   "dioses": [
