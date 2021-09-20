@@ -115,7 +115,7 @@
               if (!res.ok)
                 throw { status: res.status, statusText: res.statusText };
               location.reload();
-            } catch (error) {
+            } catch (err) {
               let message = err.statusText || "Ocurrio un error";
               $form.insertAdjacentHTML(
                 "afterend",

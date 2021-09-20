@@ -24,6 +24,11 @@
       "id": 5,
       "nombre": "ikki",
       "constelacion": "Fénix"
+    },
+    {
+      "nombre": "Doko",
+      "constelacion": "Libra",
+      "id": 6
     }
   ],
   "dioses": [
